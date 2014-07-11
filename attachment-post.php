@@ -9,8 +9,8 @@ Author: Beapi
 register_activation_hook( __FILE__, array( 'AP_Plugin', 'activate' ) );
 add_action( 'plugins_loaded', 'init_ap_plugin' );
 
-function init_ap_plugin(){
-	if( is_admin() ){
+function init_ap_plugin() {
+	if( is_admin() ) {
 		new Attachment_Post();
 	}
 }
@@ -22,13 +22,11 @@ class Attachment_Post {
 	}
 
 	public static function upload_dir( $params ) {
-
-		if( isset( $_GET['post'] ) ) {
+		if( isset( $_POST['action'] ) && $_POST['action'] == 'upload-attachment' ) {
 			$params['subdir'] = '/' .date('Y') . '/' . date('m');
-			$params['path'] = $params['basedir'] . $params['subdir'];
-			$params['url']  = $params['baseurl'] . $params['subdir'];
+			$params['path']   = $params['basedir'] . $params['subdir'];
+			$params['url']    = $params['baseurl'] . $params['subdir'];
 		}
-
 		return $params;
 	}
 }
