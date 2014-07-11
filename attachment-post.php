@@ -6,7 +6,6 @@ Description: Use Post Attachment for upload your media in directory Year/Month/ 
 Author: Beapi
 */
 
-register_activation_hook( __FILE__, array( 'AP_Plugin', 'activate' ) );
 add_action( 'plugins_loaded', 'init_ap_plugin' );
 
 function init_ap_plugin() {
