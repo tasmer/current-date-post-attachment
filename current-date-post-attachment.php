@@ -13,7 +13,7 @@ add_action( 'plugins_loaded', 'init_ap_plugin' );
  *
  */
 function init_ap_plugin() {
-	if( is_admin() ) {
+	if ( is_admin() ) {
 		new Current_Date_Post_Attachment();
 	}
 }
@@ -22,7 +22,9 @@ function init_ap_plugin() {
  * Class Current_Date_Post_Attachment
  */
 class Current_Date_Post_Attachment {
-
+	/**
+	 * Current_Date_Post_Attachment constructor.
+	 */
 	function __construct() {
 		add_filter( 'upload_dir', array( __CLASS__, 'upload_dir' ) );
 	}
@@ -35,11 +37,15 @@ class Current_Date_Post_Attachment {
 	 * @return mixed
 	 */
 	public static function upload_dir( $params ) {
-		if( isset( $_POST['action'] ) && $_POST['action'] == 'upload-attachment' ) {
-			$params['subdir'] = '/' .date('Y') . '/' . date('m');
-			$params['path']   = $params['basedir'] . $params['subdir'];
-			$params['url']    = $params['baseurl'] . $params['subdir'];
+		if ( ! isset( $_POST['action'] ) && $_POST['action'] !== 'upload-attachment' ) {
+			return $params;
 		}
+
+		$params['subdir'] = '/' . date( 'Y' ) . '/' . date( 'm' );
+		$params['path']   = $params['basedir'] . $params['subdir'];
+		$params['url']    = $params['baseurl'] . $params['subdir'];
+
+
 		return $params;
 	}
 }
